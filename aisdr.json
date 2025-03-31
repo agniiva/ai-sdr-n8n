@@ -1,0 +1,2845 @@
+{
+    "name": "AI Sales Team",
+    "nodes": [
+      {
+        "parameters": {
+          "path": "ai-sales",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          -520,
+          380
+        ],
+        "id": "66acd6e8-ccf1-4036-a006-974380ee6716",
+        "name": "Webhook",
+        "webhookId": "07776c18-ab1a-4059-b934-bedbf4ff9ea1"
+      },
+      {
+        "parameters": {
+          "rules": {
+            "values": [
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "leftValue": "={{ $json.query.action }}",
+                      "rightValue": "startScraping",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals"
+                      },
+                      "id": "519b6bd4-7866-4cc7-a3a7-72cf9d734b33"
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "Start Scraping"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "id": "5b2c1dc4-d994-45fe-84eb-85ddcfdf2d29",
+                      "leftValue": "={{ $json.query.action }}",
+                      "rightValue": "ScrapeICP",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals",
+                        "name": "filter.operator.equals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "ScrapeICP"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "id": "7c20f68a-ecfd-40dc-8d47-9bc4a668b8cc",
+                      "leftValue": "={{ $json.query.action }}",
+                      "rightValue": "scrapeLinkedin",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals",
+                        "name": "filter.operator.equals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "scrapeLinkedin"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "id": "2e3cd008-2495-4bc2-af84-a09b00b6c4a2",
+                      "leftValue": "={{ $json.query.action }}",
+                      "rightValue": "CreateEmailCampaigns",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals",
+                        "name": "filter.operator.equals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "CreateEmailCampaigns"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "id": "18b4fe85-c773-473a-9acb-88faf7239454",
+                      "leftValue": "={{ $json.query.action }}",
+                      "rightValue": "ScheduleCampaigns",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals",
+                        "name": "filter.operator.equals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "ScheduleCampaigns"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.switch",
+        "typeVersion": 3.2,
+        "position": [
+          -380,
+          380
+        ],
+        "id": "5f30a451-2c4b-4f3b-82a3-031e4036139e",
+        "name": "Switch"
+      },
+      {
+        "parameters": {
+          "authentication": "airtableOAuth2Api",
+          "base": {
+            "__rl": true,
+            "value": "app97u8DU4oL11BxM",
+            "mode": "list",
+            "cachedResultName": "Prototype v0 [SalesTeamInABox]",
+            "cachedResultUrl": "https://airtable.com/app97u8DU4oL11BxM"
+          },
+          "table": {
+            "__rl": true,
+            "value": "tblvSmWd0QNJ0ZjiZ",
+            "mode": "list",
+            "cachedResultName": "Campaigns",
+            "cachedResultUrl": "https://airtable.com/app97u8DU4oL11BxM/tblvSmWd0QNJ0ZjiZ"
+          },
+          "id": "={{ $('Webhook').item.json.query.recordId }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.airtable",
+        "typeVersion": 2.1,
+        "position": [
+          0,
+          0
+        ],
+        "id": "ceb427e5-1a11-4fde-9efc-98ee11298c0f",
+        "name": "Airtable",
+        "credentials": {
+          "airtableOAuth2Api": {
+            "id": "VdBsIRNi49gmz0hc",
+            "name": "GrowthOS"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "model": {
+            "__rl": true,
+            "value": "o3-mini",
+            "mode": "list",
+            "cachedResultName": "o3-mini"
+          },
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+        "typeVersion": 1.2,
+        "position": [
+          140,
+          160
+        ],
+        "id": "3ed50b95-1594-4d87-92e1-4698e85b0411",
+        "name": "OpenAI Chat Model",
+        "credentials": {
+          "openAiApi": {
+            "id": "wqEQ7odXwSaY9kst",
+            "name": "OpenAi Sales Summary & Proposal System"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "schemaType": "manual",
+          "inputSchema": "{\n  \"name\": \"prospect_search_schema\",\n  \"schema\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"JobTitle\": {\n        \"type\": \"string\",\n        \"description\": \"The title of the job position of the prospect being searched.\"\n      },\n      \"CompanyType\": {\n        \"type\": \"string\",\n        \"description\": \"The type of company associated with the prospect.\"\n      },\n      \"Location\": {\n        \"type\": \"string\",\n        \"description\": \"The geographical location where the prospect is based.\"\n      },\n      \"CompanySize\": {\n        \"type\": \"string\",\n        \"description\": \"The size category of the company (e.g., number of employees).\"\n      },\n      \"Industry\": {\n        \"type\": \"string\",\n        \"description\": \"The industry sector the company belongs to.\"\n      },\n      \"LeadNumber\": {\n        \"type\": \"number\",\n        \"description\": \"The number of leads to be generated from this search query.\"\n      }\n    },\n    \"required\": [\n      \"JobTitle\",\n      \"CompanyType\",\n      \"Location\",\n      \"CompanySize\",\n      \"Industry\",\n      \"LeadNumber\"\n    ],\n    \"additionalProperties\": false\n  },\n  \"strict\": true\n}"
+        },
+        "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+        "typeVersion": 1.2,
+        "position": [
+          360,
+          160
+        ],
+        "id": "d8c77b46-9423-4933-b2cd-b2967153c6b5",
+        "name": "Structured Output Parser"
+      },
+      {
+        "parameters": {
+          "authentication": "airtableOAuth2Api",
+          "operation": "update",
+          "base": {
+            "__rl": true,
+            "value": "app97u8DU4oL11BxM",
+            "mode": "list",
+            "cachedResultName": "Prototype v0 [SalesTeamInABox]",
+            "cachedResultUrl": "https://airtable.com/app97u8DU4oL11BxM"
+          },
+          "table": {
+            "__rl": true,
+            "value": "tblvSmWd0QNJ0ZjiZ",
+            "mode": "list",
+            "cachedResultName": "Campaigns",
+            "cachedResultUrl": "https://airtable.com/app97u8DU4oL11BxM/tblvSmWd0QNJ0ZjiZ"
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "LeadNumber": "={{ $json.output.LeadNumber }}",
+              "id": "={{ $('Webhook').item.json.query.recordId }}",
+              "JobTitle": "={{ $json.output.JobTitle }}",
+              "CompanyType": "={{ $json.output.CompanyType }}",
+              "Location": "={{ $json.output.Location }}",
+              "CompanySize": "={{ $json.output.CompanySize }}",
+              "Industry": "={{ $json.output.Industry }}"
+            },
+            "matchingColumns": [
+              "id"
+            ],
+            "schema": [
+              {
+                "id": "id",
+                "displayName": "id",
+                "required": false,
+                "defaultMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": true,
+                "removed": false
+              },
+              {
+                "id": "ProjectName",
+                "displayName": "ProjectName",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Query",
+                "displayName": "Query",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Start?",
+                "displayName": "Start?",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "boolean",
+                "readOnly": false,
+                "removed": true
+              },
+              {
+                "id": "JobTitle",
+                "displayName": "JobTitle",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "CompanyType",
+                "displayName": "CompanyType",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Location",
+                "displayName": "Location",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "CompanySize",
+                "displayName": "CompanySize",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Industry",
+                "displayName": "Industry",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "LeadNumber",
+                "displayName": "LeadNumber",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "number",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Action",
+                "displayName": "Action",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "options",
+                "options": [
+                  {
+                    "name": "Idle",
+                    "value": "Idle"
+                  },
+                  {
+                    "name": "ScrapeLeads",
+                    "value": "ScrapeLeads"
+                  }
+                ],
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Website",
+                "displayName": "Website",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.airtable",
+        "typeVersion": 2.1,
+        "position": [
+          440,
+          0
+        ],
+        "id": "81ff78a7-e483-4699-8537-75b37b64af41",
+        "name": "Airtable1",
+        "credentials": {
+          "airtableOAuth2Api": {
+            "id": "VdBsIRNi49gmz0hc",
+            "name": "GrowthOS"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "authentication": "airtableOAuth2Api",
+          "base": {
+            "__rl": true,
+            "value": "app97u8DU4oL11BxM",
+            "mode": "list",
+            "cachedResultName": "Prototype v0 [SalesTeamInABox]",
+            "cachedResultUrl": "https://airtable.com/app97u8DU4oL11BxM"
+          },
+          "table": {
+            "__rl": true,
+            "value": "tblvSmWd0QNJ0ZjiZ",
+            "mode": "list",
+            "cachedResultName": "Campaigns",
+            "cachedResultUrl": "https://airtable.com/app97u8DU4oL11BxM/tblvSmWd0QNJ0ZjiZ"
+          },
+          "id": "={{ $('Webhook').item.json.query.recordId }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.airtable",
+        "typeVersion": 2.1,
+        "position": [
+          0,
+          380
+        ],
+        "id": "64a978c8-6ab3-4ead-90fe-4bc86232bd76",
+        "name": "Airtable2",
+        "credentials": {
+          "airtableOAuth2Api": {
+            "id": "VdBsIRNi49gmz0hc",
+            "name": "GrowthOS"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "1ee51694-5646-4d42-bfc9-9a4a316711d2",
+                "name": "Campaign",
+                "value": "={{ $json.JobTitle }}_{{ $json.CompanyType }}_{{ $json.Location }}_{{ $json.CompanySize }}_{{ $json.Industry }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          140,
+          380
+        ],
+        "id": "f9a9b7db-b17d-4e11-85bc-757b33d25e0a",
+        "name": "Edit Fields"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "3dfdae07-b47b-4d61-a415-ca28d8c1bc92",
+                "name": "Query",
+                "value": "=site:linkedin.com/in/ {{ $('Airtable2').item.json.JobTitle }} {{ $('Airtable2').item.json.CompanyType }} {{ $('Airtable2').item.json.Location }} {{ $('Airtable2').item.json.Industry }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          280,
+          380
+        ],
+        "id": "fa43cb46-821e-44c3-a499-da511f830b18",
+        "name": "Edit Fields1"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "b15f05fe-e7d3-4f09-a15a-fe7cdf176e7e",
+                "name": "Organic",
+                "value": "={{ $json.organic }}",
+                "type": "array"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          580,
+          380
+        ],
+        "id": "ea7ce109-d0a0-43ce-9f84-7e37501e52bd",
+        "name": "Edit Fields2"
+      },
+      {
+        "parameters": {
+          "fieldToSplitOut": "Organic",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.splitOut",
+        "typeVersion": 1,
+        "position": [
+          700,
+          380
+        ],
+        "id": "bbbe3143-6a14-4875-942c-56bb2087f44a",
+        "name": "Split Out"
+      },
+      {
+        "parameters": {
+          "authentication": "airtableOAuth2Api",
+          "operation": "create",
+          "base": {
+            "__rl": true,
+            "value": "app97u8DU4oL11BxM",
+            "mode": "list",
+            "cachedResultName": "Prototype v0 [SalesTeamInABox]",
+            "cachedResultUrl": "https://airtable.com/app97u8DU4oL11BxM"
+          },
+          "table": {
+            "__rl": true,
+            "value": "tbltvNDtBhuTp2cqS",
+            "mode": "list",
+            "cachedResultName": "ScrapeLeads",
+            "cachedResultUrl": "https://airtable.com/app97u8DU4oL11BxM/tbltvNDtBhuTp2cqS"
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "Title": "={{ $json.title }}",
+              "LinkedinURL": "={{ $json.link }}",
+              "Snippet": "={{ $json.snippet }}",
+              "Subtitle": "={{ $json.subtitle }}",
+              "Campaign": "={{ $('Edit Fields').item.json.Campaign }}"
+            },
+            "matchingColumns": [],
+            "schema": [
+              {
+                "id": "Title",
+                "displayName": "Title",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "LinkedinURL",
+                "displayName": "LinkedinURL",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Snippet",
+                "displayName": "Snippet",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Subtitle",
+                "displayName": "Subtitle",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Campaign",
+                "displayName": "Campaign",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          },
+          "options": {
+            "typecast": true
+          }
+        },
+        "type": "n8n-nodes-base.airtable",
+        "typeVersion": 2.1,
+        "position": [
+          840,
+          380
+        ],
+        "id": "77c1324b-bfea-437e-b959-8ca9e79cddf7",
+        "name": "Airtable3",
+        "credentials": {
+          "airtableOAuth2Api": {
+            "id": "VdBsIRNi49gmz0hc",
+            "name": "GrowthOS"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "authentication": "airtableOAuth2Api",
+          "operation": "update",
+          "base": {
+            "__rl": true,
+            "value": "app97u8DU4oL11BxM",
+            "mode": "list",
+            "cachedResultName": "Prototype v0 [SalesTeamInABox]",
+            "cachedResultUrl": "https://airtable.com/app97u8DU4oL11BxM"
+          },
+          "table": {
+            "__rl": true,
+            "value": "tblvSmWd0QNJ0ZjiZ",
+            "mode": "list",
+            "cachedResultName": "Campaigns",
+            "cachedResultUrl": "https://airtable.com/app97u8DU4oL11BxM/tblvSmWd0QNJ0ZjiZ"
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "id": "={{ $('Webhook').item.json.query.recordId }}",
+              "Action": "Idle"
+            },
+            "matchingColumns": [
+              "id"
+            ],
+            "schema": [
+              {
+                "id": "id",
+                "displayName": "id",
+                "required": false,
+                "defaultMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": true,
+                "removed": false
+              },
+              {
+                "id": "ProjectName",
+                "displayName": "ProjectName",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Query",
+                "displayName": "Query",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Start?",
+                "displayName": "Start?",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "boolean",
+                "readOnly": false,
+                "removed": true
+              },
+              {
+                "id": "JobTitle",
+                "displayName": "JobTitle",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": true
+              },
+              {
+                "id": "CompanyType",
+                "displayName": "CompanyType",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": true
+              },
+              {
+                "id": "Location",
+                "displayName": "Location",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": true
+              },
+              {
+                "id": "CompanySize",
+                "displayName": "CompanySize",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": true
+              },
+              {
+                "id": "Industry",
+                "displayName": "Industry",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": true
+              },
+              {
+                "id": "LeadNumber",
+                "displayName": "LeadNumber",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "number",
+                "readOnly": false,
+                "removed": true
+              },
+              {
+                "id": "Action",
+                "displayName": "Action",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "options",
+                "options": [
+                  {
+                    "name": "Idle",
+                    "value": "Idle"
+                  },
+                  {
+                    "name": "ScrapeLeads",
+                    "value": "ScrapeLeads"
+                  }
+                ],
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Website",
+                "displayName": "Website",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.airtable",
+        "typeVersion": 2.1,
+        "position": [
+          980,
+          380
+        ],
+        "id": "b21aa1ea-0e7a-4b1f-a47c-b528c02b3470",
+        "name": "Airtable4",
+        "executeOnce": true,
+        "credentials": {
+          "airtableOAuth2Api": {
+            "id": "VdBsIRNi49gmz0hc",
+            "name": "GrowthOS"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "authentication": "airtableOAuth2Api",
+          "base": {
+            "__rl": true,
+            "value": "app97u8DU4oL11BxM",
+            "mode": "list",
+            "cachedResultName": "Prototype v0 [SalesTeamInABox]",
+            "cachedResultUrl": "https://airtable.com/app97u8DU4oL11BxM"
+          },
+          "table": {
+            "__rl": true,
+            "value": "tblvSmWd0QNJ0ZjiZ",
+            "mode": "list",
+            "cachedResultName": "Campaigns",
+            "cachedResultUrl": "https://airtable.com/app97u8DU4oL11BxM/tblvSmWd0QNJ0ZjiZ"
+          },
+          "id": "={{ $('Webhook').item.json.query.recordId }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.airtable",
+        "typeVersion": 2.1,
+        "position": [
+          20,
+          640
+        ],
+        "id": "6d4e4f15-7fd3-4772-a342-5fe464824e76",
+        "name": "Airtable5",
+        "credentials": {
+          "airtableOAuth2Api": {
+            "id": "VdBsIRNi49gmz0hc",
+            "name": "GrowthOS"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://api.apify.com/v2/acts/dev_fusion~linkedin-profile-scraper/run-sync-get-dataset-items?token=apify_api_vwZK1kN0Gpcq5sCAoRYj3J5DoU6LZf22n8Vu",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n    \"profileUrls\": [\n        \"{{ $json.LinkedinURL }}\"\n    ]\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          200,
+          640
+        ],
+        "id": "7894d2dc-4846-456a-b924-c7d57bee4608",
+        "name": "Apify"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://google.serper.dev/search",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          },
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "q",
+                "value": "={{ $json.Query }}"
+              },
+              {
+                "name": "num",
+                "value": "100"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          440,
+          380
+        ],
+        "id": "877c9d69-b920-47d1-b40c-6bb616d51cbe",
+        "name": "SerperDev",
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": "PtNcWmu7TUNrVMKY",
+            "name": "SerperDev"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=Query: {{ $json.Query }}",
+          "hasOutputParser": true,
+          "messages": {
+            "messageValues": [
+              {
+                "message": "=Your job is to take a query and break down the query to clarify certain metrics for sales research efforts, everytime you get a query you'll output:\n\nJobTitle : The title of the Job we'll be reaching out to (ideally only decision makers)\nCompanyType: Type of the company, is it a startup, or an enterprise or Agency, etc that we want to target.\nLocation: The location of the prospect, it'll be given in the query.\nCompanySize: Small/Medium/Large, decide this accordingly.\nIndustry: Which industry does the prospect belong from, if nothing is mentioned output the most relevant industry.\nLeadNumber: Number of leads.\n\nin Structured JSON\n\nExample:\n\nQuery: Give me 100 CROs of Fintech Company in California\n\nOutput:\n\n{\n\"JobTitle\": \"CRO\",\n\"CompanyType\": \"Software\",\n\"Location\": \"California\",\n\"CompanySize\": \"50-100\",\n\"Industry\": \"Fintech\",\n\"LeadNumber\": 100\n}"
+              }
+            ]
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.chainLlm",
+        "typeVersion": 1.5,
+        "position": [
+          140,
+          0
+        ],
+        "id": "961e044b-0754-444d-919a-c344dbb22d9d",
+        "name": "QueryCreator"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "0d426fd9-7a19-4795-9f49-6fe9e0ed83a9",
+                "name": "firstName",
+                "value": "={{ $json.firstName }}",
+                "type": "string"
+              },
+              {
+                "id": "6f1f07e0-1e5d-44f3-b26c-5be9225fa15e",
+                "name": "lastName",
+                "value": "={{ $json.lastName }}",
+                "type": "string"
+              },
+              {
+                "id": "fe5a7623-3300-4b5c-b874-509235677b2a",
+                "name": "headline",
+                "value": "={{ $json.headline }}",
+                "type": "string"
+              },
+              {
+                "id": "b9d40744-85d6-4772-b44c-0491ed96a476",
+                "name": "address",
+                "value": "={{ $json.addressWithCountry }}",
+                "type": "string"
+              },
+              {
+                "id": "2b0f3348-39a5-499a-bacd-1d3a3b15de2c",
+                "name": "about",
+                "value": "={{ $json.about }}",
+                "type": "string"
+              },
+              {
+                "id": "274ca5b5-7ec9-4a4f-824d-2a068d3cf29a",
+                "name": "experianceDetails",
+                "value": "={{ $json.experiences\n    .map(exp => \n      exp.breakdown && exp.subComponents && exp.subComponents.length \n        ? exp.subComponents\n            .map(sub => `${sub.title}, ${exp.title}, ${sub.caption}`)\n            .join(\"\\n\")\n        : `${exp.title}, ${exp.subtitle}, ${exp.caption}`\n    )\n    .join(\"\\n\")\n}}",
+                "type": "string"
+              },
+              {
+                "id": "211377cb-9083-4258-a251-610ed8f1fb93",
+                "name": "email",
+                "value": "={{ $json.email }}",
+                "type": "string"
+              },
+              {
+                "id": "ec666fac-f5ef-4ef9-be69-41e559d783f1",
+                "name": "companyName",
+                "value": "={{ $json.companyName }}",
+                "type": "string"
+              },
+              {
+                "id": "38ce1f5c-caa1-4b80-b792-02d9ab16b712",
+                "name": "companyWebsite",
+                "value": "={{ $json.companyWebsite }}",
+                "type": "string"
+              },
+              {
+                "id": "0cf0a484-6990-4a08-9532-ccf586544b92",
+                "name": "companyLinkedin",
+                "value": "={{ $json.companyLinkedin }}",
+                "type": "string"
+              },
+              {
+                "id": "93f3142e-533c-4c56-a2bc-30bf0244a6ce",
+                "name": "companySize",
+                "value": "={{ $json.companySize }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          380,
+          640
+        ],
+        "id": "4015ef76-371d-4acf-a278-612f4ef0ae30",
+        "name": "Edit Fields3"
+      },
+      {
+        "parameters": {
+          "authentication": "airtableOAuth2Api",
+          "operation": "update",
+          "base": {
+            "__rl": true,
+            "value": "app97u8DU4oL11BxM",
+            "mode": "list",
+            "cachedResultName": "Prototype v0 [SalesTeamInABox]",
+            "cachedResultUrl": "https://airtable.com/app97u8DU4oL11BxM"
+          },
+          "table": {
+            "__rl": true,
+            "value": "tbltvNDtBhuTp2cqS",
+            "mode": "list",
+            "cachedResultName": "ScrapeLeads",
+            "cachedResultUrl": "https://airtable.com/app97u8DU4oL11BxM/tbltvNDtBhuTp2cqS"
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "id": "={{ $('Airtable5').item.json.id }}",
+              "Action": "Done",
+              "firstName": "={{ $json.firstName }}",
+              "lastName": "={{ $json.lastName }}",
+              "headline": "={{ $json.headline }}",
+              "address": "={{ $json.address }}",
+              "about": "={{ $json.about }}",
+              "experianceDetails": "={{ $json.experianceDetails }}",
+              "email": "={{ $json.email }}",
+              "companyName": "={{ $json.companyName }}",
+              "companyWebsite": "={{ $json.companyWebsite }}",
+              "companyLinkedin": "={{ $json.companyLinkedin }}",
+              "companySize": "={{ $json.companySize }}"
+            },
+            "matchingColumns": [
+              "id"
+            ],
+            "schema": [
+              {
+                "id": "id",
+                "displayName": "id",
+                "required": false,
+                "defaultMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": true
+              },
+              {
+                "id": "Title",
+                "displayName": "Title",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "LinkedinURL",
+                "displayName": "LinkedinURL",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Snippet",
+                "displayName": "Snippet",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Subtitle",
+                "displayName": "Subtitle",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Action",
+                "displayName": "Action",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "options",
+                "options": [
+                  {
+                    "name": "Run",
+                    "value": "Run"
+                  },
+                  {
+                    "name": "Done",
+                    "value": "Done"
+                  }
+                ],
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "firstName",
+                "displayName": "firstName",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "lastName",
+                "displayName": "lastName",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "headline",
+                "displayName": "headline",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "address",
+                "displayName": "address",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "about",
+                "displayName": "about",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "experianceDetails",
+                "displayName": "experianceDetails",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "email",
+                "displayName": "email",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "companyName",
+                "displayName": "companyName",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "companyWebsite",
+                "displayName": "companyWebsite",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "companyLinkedin",
+                "displayName": "companyLinkedin",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "companySize",
+                "displayName": "companySize",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Campaign",
+                "displayName": "Campaign",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.airtable",
+        "typeVersion": 2.1,
+        "position": [
+          520,
+          640
+        ],
+        "id": "d16d6d50-55c3-4214-a6aa-e31b2726debb",
+        "name": "Airtable6",
+        "executeOnce": true,
+        "credentials": {
+          "airtableOAuth2Api": {
+            "id": "VdBsIRNi49gmz0hc",
+            "name": "GrowthOS"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "authentication": "airtableOAuth2Api",
+          "base": {
+            "__rl": true,
+            "value": "app97u8DU4oL11BxM",
+            "mode": "list",
+            "cachedResultName": "Prototype v0 [SalesTeamInABox]",
+            "cachedResultUrl": "https://airtable.com/app97u8DU4oL11BxM"
+          },
+          "table": {
+            "__rl": true,
+            "value": "tblahm7BVTMbPHvRq",
+            "mode": "list",
+            "cachedResultName": "Emails",
+            "cachedResultUrl": "https://airtable.com/app97u8DU4oL11BxM/tblahm7BVTMbPHvRq"
+          },
+          "id": "={{ $('Webhook').item.json.query.recordId }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.airtable",
+        "typeVersion": 2.1,
+        "position": [
+          20,
+          840
+        ],
+        "id": "5e099ad2-b127-4950-92f6-7a412ae3281c",
+        "name": "Airtable7",
+        "credentials": {
+          "airtableOAuth2Api": {
+            "id": "VdBsIRNi49gmz0hc",
+            "name": "GrowthOS"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=Here's the ICP Data Set you'll utilize to create your personalized outbound campaign:\n\n<>\nPerson's Name: {{ $json.Name }}  \nProfile: {{ $json['Campaign (from Leads)'][0] }}  \nCompany: {{ $json['companyName (from Leads)'][0] }}  \nCompany Size: {{ $json['companySize (from Leads)'][0] }}  \nExperience: {{ $json['experianceDetails (from Leads)'][0] }}  \nAbout: {{ $json['about (from Leads)'][0] }}  \nAddress: {{ $json['address (from Leads)'][0] }}\n<>\n\nYour Offer:\n\nWe help AI Agencies confidently address compliance standards (SO2, GDPR, etc.) to streamline their operational processes and remove compliance bottlenecks.",
+          "messages": {
+            "messageValues": [
+              {
+                "message": "=You're a million-dollar expert outbound strategist who brings consistent conversion success by crafting incredibly personalized, psychology-driven messaging across email and LinkedIn channels. You deeply understand and leverage human behavior, persuasive frameworks, and strategic personalization to craft multi-channel campaigns achieving industry-leading reply rates.\n\nYour specialty is creating highly targeted, persuasive yet concise email and LinkedIn drip campaigns, specifically optimized for recipient replies expressing intentional interest. You always use the provided ICP (Ideal Customer Profile) data to deeply personalize both messaging channels cohesively.\n\nYour process is always as follows:\n\n- You deeply analyze and empathize with the target recipient’s role, context, background, and experience using the provided data points given.\n\n- Clearly position the value of our offer: Helping AI agencies confidently and effortlessly handle vital compliance standards (such as SO2/GDPR) to streamline operations and eliminate bottlenecks.\n\n- Craft an ultra-personalized, cohesive multi-channel outreach campaign consisting of:\n\n  ✅ A concise email drip campaign lasting 5 days (messages alternate days, Day 1, Day 3, and Day 5). Each email is short and concise, with the explicit goal of receiving a reply indicating interest.\n\n  ✅ A corresponding LinkedIn message drip campaign lasting across 4 days, alternating with the emails (Days 2 and 4). Each LinkedIn message supports the email campaign with thoughtful amplification, reminding, nudging, and engaging the interest in a warm, conversational approach.\n\n- Utilize genuine psychological persuasion techniques including: Curiosity, Reciprocity, Social Proof, Authority, Storytelling, Pain-Solution alignment, and Relevance.\n\n- Proactively anticipate and address common objections subtly within concise messaging.\n\n- You always avoid lengthy or overly sales-driven content. Each message is concise, clear, warm, professional yet humanized, and specifically optimized to receive meaningful replies.\n\n- Always ensure the LinkedIn and email communications complement one another cohesively, creating the feeling of a personalized, thoughtful, human-written, highly targeted campaign.\n\nDo NOT produce generic messages—every reply should appear tailor-made explicitly for the recipient, showcasing understanding and context relevance to their role and company.\n\nOutline clearly each Email and LinkedIn message, marking clearly Day 1-5 (Email Drip) and Day 2 and Day 4 (LinkedIn Campaign).\n\nYour overarching goals:\n\n🎯 Secure positive replies which explicitly express interest and openness toward our compliance checks (SO2/GDPR, etc.) for AI agencies.\n\n🎯 Maintain authentic professional warmth and targeted personalization throughout.\n\n🎯 Craft ultra-concise communication optimized purely for engaging replies.\n\nNow, using these explicit guidelines, craft your personalized, multi-channel outbound campaign outreach strategy that'll convert exceptionally well."
+              }
+            ]
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.chainLlm",
+        "typeVersion": 1.5,
+        "position": [
+          160,
+          840
+        ],
+        "id": "692f6284-ffe5-489c-b5e9-fbd7ed814341",
+        "name": "Basic LLM Chain"
+      },
+      {
+        "parameters": {
+          "modelName": "models/gemini-2.5-pro-exp-03-25",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+        "typeVersion": 1,
+        "position": [
+          120,
+          1040
+        ],
+        "id": "79c6d4f3-d2c3-4053-b7a8-0a83d0968e36",
+        "name": "Google Gemini Chat Model",
+        "credentials": {
+          "googlePalmApi": {
+            "id": "71XNWlXlIxQGOgn3",
+            "name": "Google Gemini(PaLM) Api account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "authentication": "airtableOAuth2Api",
+          "operation": "update",
+          "base": {
+            "__rl": true,
+            "value": "app97u8DU4oL11BxM",
+            "mode": "list",
+            "cachedResultName": "Prototype v0 [SalesTeamInABox]",
+            "cachedResultUrl": "https://airtable.com/app97u8DU4oL11BxM"
+          },
+          "table": {
+            "__rl": true,
+            "value": "tblahm7BVTMbPHvRq",
+            "mode": "list",
+            "cachedResultName": "Emails",
+            "cachedResultUrl": "https://airtable.com/app97u8DU4oL11BxM/tblahm7BVTMbPHvRq"
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "id": "={{ $('Airtable7').item.json.id }}",
+              "Stratergy": "={{ $json.text }}",
+              "Action": "ScheduleCampaigns"
+            },
+            "matchingColumns": [
+              "id"
+            ],
+            "schema": [
+              {
+                "id": "id",
+                "displayName": "id",
+                "required": false,
+                "defaultMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": true
+              },
+              {
+                "id": "Name",
+                "displayName": "Name",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Action",
+                "displayName": "Action",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "options",
+                "options": [
+                  {
+                    "name": "Idle",
+                    "value": "Idle"
+                  },
+                  {
+                    "name": "CreateEmailCampaigns",
+                    "value": "CreateEmailCampaigns"
+                  },
+                  {
+                    "name": "ScheduleCampaigns",
+                    "value": "ScheduleCampaigns"
+                  },
+                  {
+                    "name": "Sent",
+                    "value": "Sent"
+                  }
+                ],
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "email (from Leads) 2",
+                "displayName": "email (from Leads) 2",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": true,
+                "removed": false
+              },
+              {
+                "id": "LinkedinURL (from Leads)",
+                "displayName": "LinkedinURL (from Leads)",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": true,
+                "removed": false
+              },
+              {
+                "id": "Snippet (from Leads)",
+                "displayName": "Snippet (from Leads)",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": true,
+                "removed": false
+              },
+              {
+                "id": "firstName (from Leads)",
+                "displayName": "firstName (from Leads)",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": true,
+                "removed": false
+              },
+              {
+                "id": "lastName (from Leads)",
+                "displayName": "lastName (from Leads)",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": true,
+                "removed": false
+              },
+              {
+                "id": "headline (from Leads)",
+                "displayName": "headline (from Leads)",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": true,
+                "removed": false
+              },
+              {
+                "id": "address (from Leads)",
+                "displayName": "address (from Leads)",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": true,
+                "removed": false
+              },
+              {
+                "id": "about (from Leads)",
+                "displayName": "about (from Leads)",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": true,
+                "removed": false
+              },
+              {
+                "id": "experianceDetails (from Leads)",
+                "displayName": "experianceDetails (from Leads)",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": true,
+                "removed": false
+              },
+              {
+                "id": "email (from Leads)",
+                "displayName": "email (from Leads)",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": true,
+                "removed": false
+              },
+              {
+                "id": "companyName (from Leads)",
+                "displayName": "companyName (from Leads)",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": true,
+                "removed": false
+              },
+              {
+                "id": "companyWebsite (from Leads)",
+                "displayName": "companyWebsite (from Leads)",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": true,
+                "removed": false
+              },
+              {
+                "id": "companySize (from Leads)",
+                "displayName": "companySize (from Leads)",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": true,
+                "removed": false
+              },
+              {
+                "id": "Stratergy",
+                "displayName": "Stratergy",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Leads",
+                "displayName": "Leads",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "array",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Title (from Leads)",
+                "displayName": "Title (from Leads)",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": true,
+                "removed": false
+              },
+              {
+                "id": "companyLinkedin (from Leads)",
+                "displayName": "companyLinkedin (from Leads)",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": true,
+                "removed": false
+              },
+              {
+                "id": "Campaign (from Leads)",
+                "displayName": "Campaign (from Leads)",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": true,
+                "removed": false
+              },
+              {
+                "id": "OutreachSequence",
+                "displayName": "OutreachSequence",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "array",
+                "readOnly": false,
+                "removed": false
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.airtable",
+        "typeVersion": 2.1,
+        "position": [
+          480,
+          840
+        ],
+        "id": "2ff55797-2fee-45be-b624-d2349bc198ff",
+        "name": "Airtable8",
+        "executeOnce": true,
+        "credentials": {
+          "airtableOAuth2Api": {
+            "id": "VdBsIRNi49gmz0hc",
+            "name": "GrowthOS"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "authentication": "airtableOAuth2Api",
+          "base": {
+            "__rl": true,
+            "value": "app97u8DU4oL11BxM",
+            "mode": "list",
+            "cachedResultName": "Prototype v0 [SalesTeamInABox]",
+            "cachedResultUrl": "https://airtable.com/app97u8DU4oL11BxM"
+          },
+          "table": {
+            "__rl": true,
+            "value": "tblahm7BVTMbPHvRq",
+            "mode": "list",
+            "cachedResultName": "Emails",
+            "cachedResultUrl": "https://airtable.com/app97u8DU4oL11BxM/tblahm7BVTMbPHvRq"
+          },
+          "id": "={{ $('Webhook').item.json.query.recordId }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.airtable",
+        "typeVersion": 2.1,
+        "position": [
+          0,
+          1160
+        ],
+        "id": "30d7f157-ed04-4223-95f5-23d19276fb62",
+        "name": "Airtable9",
+        "credentials": {
+          "airtableOAuth2Api": {
+            "id": "VdBsIRNi49gmz0hc",
+            "name": "GrowthOS"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "={{ $json.Stratergy }}",
+          "hasOutputParser": true,
+          "messages": {
+            "messageValues": [
+              {}
+            ]
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.chainLlm",
+        "typeVersion": 1.5,
+        "position": [
+          220,
+          1160
+        ],
+        "id": "985f0954-e463-462f-87c0-607051b881f3",
+        "name": "Basic LLM Chain1"
+      },
+      {
+        "parameters": {
+          "schemaType": "manual",
+          "inputSchema": "{\n  \"name\": \"create_outreach_messages\",\n  \"description\": \"Generates an array of messages based on an outreach strategy and today's date.\",\n  \"strict\": true,\n  \"parameters\": {\n    \"type\": \"object\",\n    \"required\": [\n      \"outreach_strategy\"\n    ],\n    \"properties\": {\n      \"outreach_strategy\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"messages\": {\n            \"type\": \"array\",\n            \"description\": \"Array of message objects to be constructed based on the outreach strategy.\",\n            \"items\": {\n              \"type\": \"object\",\n              \"properties\": {\n                \"subject\": {\n                  \"type\": \"string\",\n                  \"description\": \"Subject of the email, leave blank for LinkedIn messages.\"\n                },\n                \"body\": {\n                  \"type\": \"string\",\n                  \"description\": \"The message body in properly spaced markdown format.\"\n                },\n                \"type\": {\n                  \"type\": \"string\",\n                  \"enum\": [\n                    \"Linkedin\",\n                    \"Email\"\n                  ],\n                  \"description\": \"Type of the message (LinkedIn or Email).\"\n                },\n                \"date\": {\n                  \"type\": \"string\",\n                  \"description\": \"Date when to execute the specific message.\"\n                }\n              },\n              \"additionalProperties\": false,\n              \"required\": [\n                \"subject\",\n                \"body\",\n                \"type\",\n                \"date\"\n              ]\n            }\n          }\n        },\n        \"execution_criteria\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"frequency\": {\n              \"type\": \"string\",\n              \"description\": \"How often to send messages.\"\n            },\n            \"time_of_day\": {\n              \"type\": \"string\",\n              \"description\": \"Preferred time of day to send messages.\"\n            }\n          }\n        },\n        \"additionalProperties\": false,\n        \"required\": [\n          \"messages\"\n        ]\n      }\n    },\n    \"today_date\": {\n      \"type\": \"string\",\n      \"format\": \"date\",\n      \"description\": \"Today's date to reference for message scheduling.\"\n    },\n    \"additionalProperties\": false\n  }\n}"
+        },
+        "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+        "typeVersion": 1.2,
+        "position": [
+          380,
+          1340
+        ],
+        "id": "5c725aae-b5c8-4c32-9883-1f97f320e85f",
+        "name": "Structured Output Parser1"
+      },
+      {
+        "parameters": {
+          "model": {
+            "__rl": true,
+            "mode": "list",
+            "value": "gpt-4o-mini"
+          },
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+        "typeVersion": 1.2,
+        "position": [
+          140,
+          1320
+        ],
+        "id": "75203ece-a515-478a-a103-c965b20b621f",
+        "name": "OpenAI Chat Model1",
+        "credentials": {
+          "openAiApi": {
+            "id": "wqEQ7odXwSaY9kst",
+            "name": "OpenAi Sales Summary & Proposal System"
+          }
+        }
+      }
+    ],
+    "pinData": {
+      "Apify": [
+        {
+          "json": {
+            "firstName": "Nick",
+            "lastName": "Roco",
+            "fullName": "Nick Roco",
+            "publicIdentifier": "nick-roco",
+            "headline": "AI Strategy Guy Who Actually Builds Stuff | Ex-Deloitte, Wrike | Founder/CEO @ StellarStream AI | Still A Human (for now)",
+            "connections": 5146,
+            "followers": 6466,
+            "openConnection": false,
+            "urn": "ACoAABPeWRsBKLF7YyB0H-zbl9hOd7-Zotk8V8g",
+            "addressCountryOnly": "United States",
+            "addressWithCountry": "New York, New York, United States",
+            "addressWithoutCountry": "New York, New York",
+            "profilePic": "https://media.licdn.com/dms/image/v2/D4E03AQE-KWHOhbkACg/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1692062016642?e=1748476800&v=beta&t=05U4lr4sCu4m99JAVoEr1KyEbr8Ow0pDWTwmRc--dvA",
+            "profilePicAllDimensions": [
+              {
+                "width": 100,
+                "height": 100,
+                "url": "https://media.licdn.com/dms/image/v2/D4E03AQE-KWHOhbkACg/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1692062016642?e=1748476800&v=beta&t=05U4lr4sCu4m99JAVoEr1KyEbr8Ow0pDWTwmRc--dvA"
+              },
+              {
+                "width": 200,
+                "height": 200,
+                "url": "https://media.licdn.com/dms/image/v2/D4E03AQE-KWHOhbkACg/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1692062016642?e=1748476800&v=beta&t=W9ka7cvd6R4Y8Bqzb-5lIJV69MJztrGMj2ZkaQ3TRlc"
+              },
+              {
+                "width": 400,
+                "height": 400,
+                "url": "https://media.licdn.com/dms/image/v2/D4E03AQE-KWHOhbkACg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1692062016642?e=1748476800&v=beta&t=vE13yEUbrMVZqYM_fvI_Qj3bd-IxmxCI_Yk9tVwbpS8"
+              },
+              {
+                "width": 800,
+                "height": 800,
+                "url": "https://media.licdn.com/dms/image/v2/D4E03AQE-KWHOhbkACg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1692062016642?e=1748476800&v=beta&t=nxUW5_O16R4mHW__zpok9xBYieuchBXsgT6DFo4do0I"
+              }
+            ],
+            "updates": [
+              {
+                "image": "https://media.licdn.com/dms/image/v2/D4E2DAQGNdds32cswMA/profile-treasury-image-shrink_800_800/profile-treasury-image-shrink_800_800/0/1719373479988?e=1743433200&v=beta&t=I-En1c1BleBf4LdrKft91D4Lb4O7rtbJSGXpLIhxq2I",
+                "postLink": "https://www.linkedin.com/in/nick-roco/overlay/1717480265832/single-media-viewer?type=LINK&profileId=ACoAABPeWRsBKLF7YyB0H-zbl9hOd7-Zotk8V8g",
+                "reactionTypeCounts": []
+              }
+            ],
+            "about": "Hi, I'm Nick, and I run StellarStream AI.\n\nWe're a completely done-for-you AI workflow automation agency.\n\nWhere we help you:\n\n→ Transform your business into an operational machine\n→ Turn AI into a tool, not just a toy\n→ Ultimately save time, headaches, and money\n\nWe do this by working with you 1-on-1 to find the biggest bottlenecks in your business today, and help you solve them with AI and automation.\n\nHere’s how we do it:\n\n1. Audit your current workflows.\n2. Identify bottlenecks, inefficiencies, and repetitive tasks.\n3. Verify if they can be outsourced to AI or automation.\n4. Break down the task into steps.\n5. Build custom AI automation tools to streamline.\n6. Launch.\n\nSimple as that.\n\nWhat you get when you work with us:\n\n→ Built-for-you AI and automation solutions\n→ A full top-to-bottom AI Automation Business Review\n→ Expert guidance on integrating AI into your business for maximum impact\n\nPast clients have received:\n\n→ An efficient AI System for customer support + lead generation.\n→ Completely automated client onboarding system.\n→ Infinite AI-enabled content creation.\n→ Strategies focused on tangible outcomes (time savings, reduced overhead, and increased revenue).\n→ Much more sleep.\n\nHere's what 2 of our clients have had to say:\n\n\"Nick has taken out a lot of those pain points and a lot of those tedious day-to-day tasks that would feel very overwhelming... I can always count on him when it comes to anything AI and really automating anything\" - Ryan, Marketing Manager @ Aragon\n\n\"We've been working together with Nick trying to figure out how we can integrate automation in making our workflow much more efficient... Not only did he help us figure out what to do with our workflow to make it more efficient, he also helped us develop what we have to make it better\" - Syra, Marketing Project Manager @ Adcrate\n\n----------\n\nIf any of this resonates, let's have a genuine conversation about your most annoying challenges.\n\nReach out to me directly, and let's explore how AI and automation can be a part of your success story.\n\nI respond promptly and am here to help.\n\nOr go here for a Free 16-page E-Guide on Ways to Use AI in your Business: https://tally.so/r/wMElKg\n\nSee ya soon.",
+            "experiences": [
+              {
+                "companyId": "98493395",
+                "companyUrn": "urn:li:fsd_company:98493395",
+                "companyLink1": "https://www.linkedin.com/company/98493395/",
+                "logo": "https://media.licdn.com/dms/image/v2/D4E0BAQGEOSoO_Q_nBw/company-logo_200_200/company-logo_200_200/0/1691785260844?e=1748476800&v=beta&t=HbtiGd6-M2rOTgE32KkuMa57XpkWsBBpHSC_haFJ4q8",
+                "title": "Founder & CEO",
+                "subtitle": "StellarStream AI",
+                "caption": "Sep 2023 - Present · 1 yr 7 mos",
+                "metadata": "New York City Metropolitan Area",
+                "breakdown": false,
+                "subComponents": [
+                  {
+                    "description": [
+                      {
+                        "type": "textComponent",
+                        "text": "StellarStream AI is a full-service AI automation agency that specializes in building custom AI tools that help businesses grow faster and more efficiently.\n\nWe help businesses save time & money, and accelerate growth through the power of AI automation.\n\nIf you're wondering how you can integrate AI into your business, let's chat!"
+                      },
+                      {
+                        "type": "mediaComponent",
+                        "text": "Get 14 Free AI Ideas for Your Business",
+                        "thumbnail": "https://media.licdn.com/dms/image/v2/D4E2DAQGNLsQeX7EwJw/profile-treasury-image-shrink_800_800/profile-treasury-image-shrink_800_800/0/1706124555898?e=1743433200&v=beta&t=23_WcF_2oAFGVcbRlKGOJWcaIu9TTUXHFLYE3PvdrjU"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "companyId": "74371395",
+                "companyUrn": "urn:li:fsd_company:74371395",
+                "companyLink1": "https://www.linkedin.com/company/74371395/",
+                "logo": "https://media.licdn.com/dms/image/v2/D4D0BAQGFtbD1G_CfUw/company-logo_200_200/company-logo_200_200/0/1682559650993/brand30_logo?e=1748476800&v=beta&t=0cWnEP-NN-vw5Za48KITGgLIx6Peed4jFBlyBDlUPNU",
+                "title": "Member",
+                "subtitle": "Brand30 · Part-time",
+                "caption": "Jan 2024 - Apr 2024 · 4 mos",
+                "metadata": "New York City Metropolitan Area",
+                "breakdown": false,
+                "subComponents": [
+                  {
+                    "description": []
+                  }
+                ]
+              },
+              {
+                "companyId": "2368665",
+                "companyUrn": "urn:li:fsd_company:2368665",
+                "companyLink1": "https://www.linkedin.com/company/2368665/",
+                "logo": "https://media.licdn.com/dms/image/v2/D4E0BAQGOdbiueNjCyA/company-logo_200_200/company-logo_200_200/0/1691089520168/dataminr_logo?e=1748476800&v=beta&t=ILd-kax0gfexE1e93ABnjdkzErVapDvsjaa0fvF4WFI",
+                "title": "Senior Manager, Partner Strategy & Operations",
+                "subtitle": "Dataminr",
+                "caption": "Jan 2022 - Nov 2023 · 1 yr 11 mos",
+                "metadata": "New York City Metropolitan Area",
+                "breakdown": false,
+                "subComponents": [
+                  {
+                    "description": []
+                  }
+                ]
+              },
+              {
+                "companyId": "612239",
+                "companyUrn": "urn:li:fsd_company:612239",
+                "companyLink1": "https://www.linkedin.com/company/612239/",
+                "logo": "https://media.licdn.com/dms/image/v2/C4D0BAQFoJjhJFiQuYw/company-logo_200_200/company-logo_200_200/0/1630563354522/wrike_logo?e=1748476800&v=beta&t=oOKRdAPRnAzYusRwxb-db5FBgPyaXylmTbYmD4sYYkY",
+                "title": "Wrike",
+                "subtitle": "2 yrs",
+                "breakdown": true,
+                "subComponents": [
+                  {
+                    "title": "Manager, Strategy & Operations",
+                    "caption": "Jan 2021 - Jan 2022 · 1 yr 1 mo",
+                    "metadata": "San Francisco Bay Area",
+                    "description": [
+                      {
+                        "type": "textComponent",
+                        "text": "Wrike helps people do the best work of their lives.\n\nAcquired by Citrix (NASDAQ: CTXS) in January 2021 for $2.25B.\n\nhttps://techcrunch.com/2021/01/19/citrix-is-acquiring-wrike-from-vista-for-2-25b/"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Associate, Strategy & Operations",
+                    "caption": "Feb 2020 - Jan 2021 · 1 yr",
+                    "metadata": "San Francisco Bay Area",
+                    "description": []
+                  }
+                ]
+              },
+              {
+                "companyId": "7970304",
+                "companyUrn": "urn:li:fsd_company:7970304",
+                "companyLink1": "https://www.linkedin.com/company/7970304/",
+                "logo": "https://media.licdn.com/dms/image/v2/C560BAQFyuulckDgQ3w/company-logo_200_200/company-logo_200_200/0/1672953318949/reforge_logo?e=1748476800&v=beta&t=nMdLbNKk4qL3aAFODHTAbvD3mf6P0PMu3b9nAaVxIto",
+                "title": "Growth Series",
+                "subtitle": "Reforge",
+                "caption": "Oct 2021 - Dec 2021 · 3 mos",
+                "breakdown": false,
+                "subComponents": [
+                  {
+                    "description": [
+                      {
+                        "type": "textComponent",
+                        "text": "Participant in the Reforge Growth Series F21 cohort.\n\nAccepting 25% of applicants globally, the Reforge Growth Series is an intensive 6-week career accelerator program focused on tech-specific growth strategies and concepts, taught by top tech industry leaders from Hubspot, Uber, Pinterest, Instacart, LinkedIn, a16z and more. Each week includes content focused on teaching professionals principles and frameworks for sustainable growth in their respective tech companies.\n\nhttps://www.reforge.com/"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "educations": [
+              {
+                "companyId": "5372",
+                "companyUrn": "urn:li:fsd_company:5372",
+                "companyLink1": "https://www.linkedin.com/company/5372/",
+                "logo": "https://media.licdn.com/dms/image/v2/C510BAQHEZRcLGw73jQ/company-logo_200_200/company-logo_200_200/0/1631314878612?e=1748476800&v=beta&t=8Lx9CUKOQODJBkd27Hw05OS0QtmCrOkVRnJKPKHJPLo",
+                "title": "UC Santa Barbara",
+                "subtitle": "Bachelor’s Degree, Economics and Accounting",
+                "breakdown": false,
+                "subComponents": [
+                  {
+                    "description": [
+                      {
+                        "type": "insightComponent",
+                        "text": "Activities and societies: Vice Chairman of UCSB Investment Advisory Committee,\n\nAlpha Tau Omega Fraternity,\n\nThe Finance Connection at UCSB,\n\nThe Accounting Association"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "companyId": "5372",
+                "companyUrn": "urn:li:fsd_company:5372",
+                "companyLink1": "https://www.linkedin.com/company/5372/",
+                "logo": "https://media.licdn.com/dms/image/v2/C510BAQHEZRcLGw73jQ/company-logo_200_200/company-logo_200_200/0/1631314878612?e=1748476800&v=beta&t=8Lx9CUKOQODJBkd27Hw05OS0QtmCrOkVRnJKPKHJPLo",
+                "title": "UC Santa Barbara",
+                "subtitle": "Certificate: Technology Management Entrepreneurship",
+                "breakdown": false,
+                "subComponents": [
+                  {
+                    "description": [
+                      {
+                        "type": "textComponent",
+                        "text": "The Technology Management Program (TMP) offers driven, innovative, and entrepreneurial students an in-depth understanding of business principles and professional skills vital to their success after graduation. Graduate and undergraduate students receive a cutting-edge curriculum of theory, practice, and mentorship that is at the intersection of technology, business, and social science.\n\nStudents work under the guidance of dedicated faculty, practicing professionals, and experienced mentors."
+                      },
+                      {
+                        "type": "mediaComponent",
+                        "text": "UCSB's Technology Management Program",
+                        "thumbnail": "undefinedundefined"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "licenseAndCertificates": [
+              {
+                "companyId": "2494",
+                "companyUrn": "urn:li:fsd_company:2494",
+                "companyLink1": "https://www.linkedin.com/company/2494/",
+                "logo": "https://media.licdn.com/dms/image/v2/C4D0BAQF0uyE7RGKDGg/company-logo_200_200/company-logo_200_200/0/1631374698859/bloomberg_lp_logo?e=1748476800&v=beta&t=ngOQYKgl-s_1ZPvR6m6uWC43WssJIxmKiwR3lCLhSqU",
+                "title": "Bloomberg Essentials and Equity Certification",
+                "subtitle": "Bloomberg",
+                "caption": "Issued Jul 2015",
+                "breakdown": false,
+                "subComponents": [
+                  {
+                    "description": []
+                  }
+                ]
+              }
+            ],
+            "honorsAndAwards": [],
+            "languages": [],
+            "volunteerAndAwards": [],
+            "verifications": [],
+            "promos": [],
+            "highlights": [],
+            "projects": [],
+            "publications": [],
+            "patents": [],
+            "courses": [],
+            "testScores": [],
+            "organizations": [],
+            "volunteerCauses": [],
+            "interests": [
+              {
+                "section_name": "Top Voices",
+                "section_components": [
+                  {
+                    "titleV2": "Marvin Sanginés",
+                    "caption": "27,801 followers",
+                    "subtitle": "Building Effective Personal Brands for Founders & Executives with Purpose | B2B Content Engines & Founder-Led Marketing | Coffee Connoisseur & Founder at notus 💆🏽",
+                    "size": "LARGE",
+                    "textActionTarget": "https://www.linkedin.com/in/marvinsangines",
+                    "subComponents": []
+                  },
+                  {
+                    "titleV2": "Chase Dimond",
+                    "caption": "375,972 followers",
+                    "subtitle": "Top Ecommerce Email Marketer & Agency Owner | We’ve sent over 1 billion emails for our clients resulting in $200+ million in email attributable revenue.",
+                    "size": "LARGE",
+                    "textActionTarget": "https://www.linkedin.com/in/chasedimond",
+                    "subComponents": []
+                  }
+                ]
+              },
+              {
+                "section_name": "Companies",
+                "section_components": [
+                  {
+                    "titleV2": "Deloitte",
+                    "caption": "18,298,105 followers",
+                    "size": "LARGE",
+                    "textActionTarget": "https://www.linkedin.com/company/1038/",
+                    "subComponents": []
+                  },
+                  {
+                    "titleV2": "PwC",
+                    "caption": "6,824,856 followers",
+                    "size": "LARGE",
+                    "textActionTarget": "https://www.linkedin.com/company/1044/",
+                    "subComponents": []
+                  }
+                ]
+              },
+              {
+                "section_name": "Groups",
+                "section_components": [
+                  {
+                    "titleV2": "Influencer Marketing Association",
+                    "caption": "127,460 members",
+                    "size": "LARGE",
+                    "textActionTarget": "https://www.linkedin.com/groups/7027132",
+                    "subComponents": []
+                  },
+                  {
+                    "titleV2": "Influencer Marketing 2024 🟥",
+                    "caption": "44,613 members",
+                    "size": "LARGE",
+                    "textActionTarget": "https://www.linkedin.com/groups/3814940",
+                    "subComponents": []
+                  }
+                ]
+              },
+              {
+                "section_name": "Newsletters",
+                "section_components": [
+                  {
+                    "titleV2": "Founder OS",
+                    "caption": "Published weekly",
+                    "subtitle": "Grow your personal brand and community in just 3 minutes a week",
+                    "size": "LARGE",
+                    "textActionTarget": "https://www.linkedin.com/newsletters/7023701163229204481",
+                    "subComponents": [
+                      {
+                        "insightComponent": {
+                          "text": "Matt Gray",
+                          "actionTarget": "https://www.linkedin.com/in/mattgray1"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "section_name": "Schools",
+                "section_components": [
+                  {
+                    "titleV2": "Corona Del Mar High School",
+                    "caption": "2,233 followers",
+                    "size": "LARGE",
+                    "textActionTarget": "https://www.linkedin.com/school/3915208/",
+                    "subComponents": []
+                  },
+                  {
+                    "titleV2": "Yale School of Management",
+                    "caption": "194,596 followers",
+                    "size": "LARGE",
+                    "textActionTarget": "https://www.linkedin.com/school/4073/",
+                    "subComponents": []
+                  }
+                ]
+              }
+            ],
+            "recommendations": [
+              {
+                "section_name": "Received",
+                "section_components": [
+                  {
+                    "titleV2": "Patricia Arancibia",
+                    "caption": "November 30, 2023, Patricia worked with Nick on the same team",
+                    "subtitle": "Product Marketing Leader",
+                    "size": "LARGE",
+                    "textActionTarget": "https://www.linkedin.com/in/patriciaarancibia",
+                    "image": "https://media.licdn.com/dms/image/v2/C4D03AQE4w3k9b6iZOA/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1572034498182?e=1748476800&v=beta&t=xHh1cs7UlKmWtTDaJ0FlZ1FShwsb6_bgz5J5BySdYpE",
+                    "subComponents": [
+                      {
+                        "fixedListComponent": [
+                          {
+                            "type": "textComponent",
+                            "text": "Nick is one the most talented and creative business strategists I've worked with. I've had the good fortune of collaborating with him at Dataminr, where he has been a key member of the GTM and Partners teams and it's been a pleasure. Nick covers all the range, from strategic ideation, planning and development to thorough and effective operationalization. He sees the big picture, devises the tactics, and sets up the details of the execution. He has a great grasp of the tech and overall business landscape, and he is as entrepreneurial as he is a team player. Any great team would be lucky to have him, and any customer would benefit from his vision and his focus on delivering customer-centric solutions that seamlessly solve real problems and create new opportunities."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "titleV2": "Angela Sanfilippo",
+                    "caption": "October 17, 2023, Angela managed Nick directly",
+                    "subtitle": "Global Partnerships & GTM Executive | SaaS & AI | PLG & SLG",
+                    "size": "LARGE",
+                    "textActionTarget": "https://www.linkedin.com/in/angelasanfilippo",
+                    "image": "https://media.licdn.com/dms/image/v2/D5603AQFlYAAVO9sluA/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1686240954646?e=1748476800&v=beta&t=Y-gNew8X4Ft10cWRihfRmoouk6IBvUPS0N3S_XQrAY8",
+                    "subComponents": [
+                      {
+                        "fixedListComponent": [
+                          {
+                            "type": "textComponent",
+                            "text": "I had the pleasure of having Nick on my team at Dataminr, in which we were tasked with defining and building a partner ecosystem from scratch. With a blank canvas, an organization that wasn't sure what \"partner strategy\" actually meant, some incredibly aggressive goals and literally no foundation for a strategy, Nick was absolutely pivotal in helping to build a strategic framework that we could use to define the partner strategy across a diverse ecosystem (of ISVs, resellers/VARS, consulting/GSI and OEM partners). \n\nHe was my partner in crime in architecting the operational infrastructure we needed to connect an external partner ecosystem to our internal process and tools that allowed us to measure and optimize the business across multiple complex dimensions. In a language partnerships could understand that translated to the core business metrics Dataminr cared about. \n\nHe helped me to create a strategic prioritization framework based on partner revenue opportunity and time to revenue that provided the foundation for how we evaluated, prioritized, engaged and supported a growing number of partners with a lean GTM team. \n\nAnd we worked on various strategic projects that were new revenue streams or routes to markets that required deep analysis to understand revenue opportunity and GTM implications that married both quantitative and qualitative analysis. \n\nNick's highly strategic, data-driven, self-sufficient, wicked-smart, incredibly collaborative and flexible, can add value in multiple ways and has skills that people with twice his experience still haven't mastered. He's an asset to any organization that is lucky to have him. And I'm already plotting for ways we can work together again. \n\nThank you, Nick, for everything you did for our team. It was wild ride of ups and downs and I couldn't imagine where we would be without you."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "section_name": "Given",
+                "section_components": [
+                  {
+                    "titleV2": "Patricia Arancibia",
+                    "caption": "December 5, 2023, Nick worked with Patricia on the same team",
+                    "subtitle": "Product Marketing Leader",
+                    "size": "LARGE",
+                    "textActionTarget": "https://www.linkedin.com/in/patriciaarancibia",
+                    "image": "https://media.licdn.com/dms/image/v2/C4D03AQE4w3k9b6iZOA/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1572034498182?e=1748476800&v=beta&t=xHh1cs7UlKmWtTDaJ0FlZ1FShwsb6_bgz5J5BySdYpE",
+                    "subComponents": [
+                      {
+                        "fixedListComponent": [
+                          {
+                            "type": "textComponent",
+                            "text": "Patricia is a product marketing guru who stood as our 'Voice of the Customer' on the Partnerships team at Dataminr. She is fantastic at translating rough, ambiguous business requirements into consumable and impactful marketing collateral that is used broadly across the entire organization. Her ability to empathize with the customers, combined with her knack for listening for the most important details, is only part of what makes her a product marketing powerhouse. Her work not only elevated our team's understanding of our customer base but also significantly enhanced the effectiveness of our marketing strategies.\n\nBeyond her professional impact, Patricia is a great teammate. She embodies the spirit of collaboration and support, always there to have your back through both triumphs and challenges. Patricia brings the 'human' element back to the workplace. I have no doubt Patricia's strong skills as a marketer and her innate ability to connect with customer needs will add immense value to any organization she joins."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "titleV2": "Angela Sanfilippo",
+                    "caption": "October 18, 2023, Nick reported directly to Angela",
+                    "subtitle": "Global Partnerships & GTM Executive | SaaS & AI | PLG & SLG",
+                    "size": "LARGE",
+                    "textActionTarget": "https://www.linkedin.com/in/angelasanfilippo",
+                    "image": "https://media.licdn.com/dms/image/v2/D5603AQFlYAAVO9sluA/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1686240954646?e=1748476800&v=beta&t=Y-gNew8X4Ft10cWRihfRmoouk6IBvUPS0N3S_XQrAY8",
+                    "subComponents": [
+                      {
+                        "fixedListComponent": [
+                          {
+                            "type": "textComponent",
+                            "text": "I had the extraordinary privilege of working under Angela's leadership at Dataminr, where she was the driving force behind our new partnerships team's Go-To-Market (GTM) function. When Angela took the reins, we had little more than a blank slate and ambitious goals. She meticulously crafted the entire GTM framework, from systems, tools, & processes, to assembling a cross-functional team that spanned strategy & ops, enablement, marketing, product marketing, and partner success.\n\nAngela was the team's guiding light in navigating the complexities of building an operational infrastructure that seamlessly connected our external partner ecosystem with our internal processes. Her strategic acumen was invaluable in creating a rigorous GTM process across all 4 of our newly-launched partner types (Resellers, ISVs, GSIs, and Platform), which became the cornerstone of how we evaluated and engaged with a growing number of partners.\n\nNo task is too small or too large for Angela. She embodies the term \"fierce leader,\" always willing to roll up her sleeves and 'Get Stuff Done'. Her leadership was instrumental in propelling the partnerships team to heights we couldn't have imagined achieving without her.\n\nTo say I look forward to the opportunity to work with Angela again would be an understatement. For any organization considering bringing her onboard, know that you're not just getting a GTM leader; you're gaining a 'Force of Nature.' You'd be hard pressed to find someone that can turn nothing into something quite like Angela can.\n\nHer unparalleled skills, leadership qualities, and spirit make her an asset that any organization would be fortunate to have. I give Angela my highest recommendation without reservation."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "skills": [
+              {
+                "title": "Functional Leadership",
+                "subComponents": [
+                  {
+                    "description": [
+                      {
+                        "type": "insightComponent",
+                        "text": "5 experiences across StellarStream AI and 3 other companies"
+                      },
+                      {
+                        "type": "insightComponent",
+                        "text": "Endorsed by 1 person in the last 6 months"
+                      },
+                      {
+                        "type": "insightComponent",
+                        "text": "3 endorsements"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "title": "Messaging",
+                "subComponents": [
+                  {
+                    "description": [
+                      {
+                        "type": "insightComponent",
+                        "text": "4 experiences across StellarStream AI and 2 other companies"
+                      },
+                      {
+                        "type": "insightComponent",
+                        "text": "Endorsed by 1 person in the last 6 months"
+                      },
+                      {
+                        "type": "insightComponent",
+                        "text": "4 endorsements"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "title": "Cross-functional Team Leadership",
+                "subComponents": [
+                  {
+                    "description": [
+                      {
+                        "type": "insightComponent",
+                        "text": "4 experiences across Dataminr and 2 other companies"
+                      },
+                      {
+                        "type": "insightComponent",
+                        "text": "1 endorsement"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "title": "Business Insights",
+                "subComponents": [
+                  {
+                    "description": [
+                      {
+                        "type": "insightComponent",
+                        "text": "6 experiences across StellarStream AI and 3 other companies"
+                      },
+                      {
+                        "type": "insightComponent",
+                        "text": "1 endorsement"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "title": "Automation",
+                "subComponents": [
+                  {
+                    "description": [
+                      {
+                        "type": "insightComponent",
+                        "text": "Founder & CEO at StellarStream AI"
+                      },
+                      {
+                        "type": "insightComponent",
+                        "text": "3 endorsements"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "title": "Product Marketing",
+                "subComponents": [
+                  {
+                    "description": [
+                      {
+                        "type": "insightComponent",
+                        "text": "3 experiences across Dataminr and 1 other company"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "title": "Strategy",
+                "subComponents": [
+                  {
+                    "description": [
+                      {
+                        "type": "insightComponent",
+                        "text": "4 experiences across StellarStream AI and 2 other companies"
+                      },
+                      {
+                        "type": "insightComponent",
+                        "text": "1 endorsement"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "title": "Go-to-Market Strategy",
+                "subComponents": [
+                  {
+                    "description": [
+                      {
+                        "type": "insightComponent",
+                        "text": "5 experiences across StellarStream AI and 3 other companies"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "title": "Project Management",
+                "subComponents": [
+                  {
+                    "description": [
+                      {
+                        "type": "insightComponent",
+                        "text": "6 experiences across StellarStream AI and 3 other companies"
+                      },
+                      {
+                        "type": "insightComponent",
+                        "text": "1 endorsement"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "title": "Management Consulting",
+                "subComponents": [
+                  {
+                    "description": [
+                      {
+                        "type": "insightComponent",
+                        "text": "2 experiences at Deloitte"
+                      },
+                      {
+                        "type": "insightComponent",
+                        "text": "2 endorsements"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "title": "Growth Strategies",
+                "subComponents": [
+                  {
+                    "description": [
+                      {
+                        "type": "insightComponent",
+                        "text": "7 experiences across StellarStream AI and 4 other companies"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "title": "Consulting",
+                "subComponents": [
+                  {
+                    "description": [
+                      {
+                        "type": "insightComponent",
+                        "text": "4 experiences across StellarStream AI and 2 other companies"
+                      },
+                      {
+                        "type": "insightComponent",
+                        "text": "1 endorsement"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "title": "Business Process Improvement",
+                "subComponents": [
+                  {
+                    "description": [
+                      {
+                        "type": "insightComponent",
+                        "text": "3 endorsements"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "title": "Artificial Intelligence (AI)",
+                "subComponents": [
+                  {
+                    "description": [
+                      {
+                        "type": "insightComponent",
+                        "text": "Founder & CEO at StellarStream AI"
+                      },
+                      {
+                        "type": "insightComponent",
+                        "text": "1 endorsement"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "title": "Conversational AI",
+                "subComponents": [
+                  {
+                    "description": [
+                      {
+                        "type": "insightComponent",
+                        "text": "Founder & CEO at StellarStream AI"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "title": "Process Automation",
+                "subComponents": [
+                  {
+                    "description": [
+                      {
+                        "type": "insightComponent",
+                        "text": "Founder & CEO at StellarStream AI"
+                      },
+                      {
+                        "type": "insightComponent",
+                        "text": "1 endorsement"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "title": "Research",
+                "subComponents": [
+                  {
+                    "description": [
+                      {
+                        "type": "insightComponent",
+                        "text": "4 endorsements"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "title": "Microsoft Excel",
+                "subComponents": [
+                  {
+                    "description": [
+                      {
+                        "type": "insightComponent",
+                        "text": "11 endorsements"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "title": "Microsoft Office",
+                "subComponents": [
+                  {
+                    "description": [
+                      {
+                        "type": "insightComponent",
+                        "text": "18 endorsements"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "title": "Advertising",
+                "subComponents": [
+                  {
+                    "description": [
+                      {
+                        "type": "insightComponent",
+                        "text": "5 endorsements"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "profilePicHighQuality": "https://media.licdn.com/dms/image/v2/D4E03AQE-KWHOhbkACg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1692062016642?e=1748476800&v=beta&t=nxUW5_O16R4mHW__zpok9xBYieuchBXsgT6DFo4do0I",
+            "linkedinUrl": "https://www.linkedin.com/in/nick-roco",
+            "email": "nick@stellarstreamai.com",
+            "companyName": "Stellarstream Ai",
+            "companyIndustry": "Internet",
+            "companyWebsite": "stellarstreamai.com",
+            "companyLinkedin": "linkedin.com/company/stellarstream-ai-company",
+            "companyFoundedIn": null,
+            "companySize": "1-10"
+          }
+        }
+      ],
+      "Webhook": [
+        {
+          "json": {
+            "headers": {
+              "host": "n8n.theagniva.com",
+              "user-agent": "Mozilla/5.0 (compatible; AirtableScripting; +https://airtable.com/developers/scripting;)",
+              "accept": "*/*",
+              "accept-encoding": "gzip,deflate",
+              "x-airtable-source": "app97u8DU4oL11BxM/wfldPdPp4iDSFcb0n",
+              "x-forwarded-for": "3.239.113.7",
+              "x-forwarded-host": "n8n.theagniva.com",
+              "x-forwarded-port": "443",
+              "x-forwarded-proto": "https",
+              "x-forwarded-server": "0e0f3324c38d",
+              "x-real-ip": "3.239.113.7"
+            },
+            "params": {},
+            "query": {
+              "recordId": "rec4iUIfGU4HOg3gc",
+              "action": "ScheduleCampaigns"
+            },
+            "body": {},
+            "webhookUrl": "https://n8n.theagniva.com/webhook/ai-sales",
+            "executionMode": "production"
+          }
+        }
+      ]
+    },
+    "connections": {
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "Switch",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Switch": {
+        "main": [
+          [
+            {
+              "node": "Airtable",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Airtable2",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Airtable5",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Airtable7",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Airtable9",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Airtable": {
+        "main": [
+          [
+            {
+              "node": "QueryCreator",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "OpenAI Chat Model": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "QueryCreator",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Structured Output Parser": {
+        "ai_outputParser": [
+          [
+            {
+              "node": "QueryCreator",
+              "type": "ai_outputParser",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Airtable2": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields1": {
+        "main": [
+          [
+            {
+              "node": "SerperDev",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields2": {
+        "main": [
+          [
+            {
+              "node": "Split Out",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Split Out": {
+        "main": [
+          [
+            {
+              "node": "Airtable3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Airtable3": {
+        "main": [
+          [
+            {
+              "node": "Airtable4",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Airtable5": {
+        "main": [
+          [
+            {
+              "node": "Apify",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "SerperDev": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "QueryCreator": {
+        "main": [
+          [
+            {
+              "node": "Airtable1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Apify": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields3": {
+        "main": [
+          [
+            {
+              "node": "Airtable6",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Airtable7": {
+        "main": [
+          [
+            {
+              "node": "Basic LLM Chain",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Google Gemini Chat Model": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Basic LLM Chain",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Basic LLM Chain": {
+        "main": [
+          [
+            {
+              "node": "Airtable8",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Airtable9": {
+        "main": [
+          [
+            {
+              "node": "Basic LLM Chain1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Structured Output Parser1": {
+        "ai_outputParser": [
+          [
+            {
+              "node": "Basic LLM Chain1",
+              "type": "ai_outputParser",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "OpenAI Chat Model1": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Basic LLM Chain1",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "active": true,
+    "settings": {
+      "executionOrder": "v1"
+    },
+    "versionId": "8cbb9f11-b9d6-4a30-966e-3befb8be8090",
+    "meta": {
+      "templateCredsSetupCompleted": true,
+      "instanceId": "909085f42eb97c736deb6b82d2c110f03ccf50d782b66aa0c8b46722c473d9a6"
+    },
+    "id": "2uXuVY6IxdF60HPJ",
+    "tags": []
+  }
